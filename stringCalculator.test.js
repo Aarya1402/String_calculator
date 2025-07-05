@@ -16,3 +16,7 @@ test('returns sum of two comma-separated numbers', () => {
   expect(add("1,2")).toBe(3);
 });
 
+test('returns the number if input is a single two-digit number', () => {
+  expect(add("42")).toBe(42);
+});
+
