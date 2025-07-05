@@ -23,4 +23,17 @@ test('returns sum of multiple numbers', () => {
     expect(add("1,2,3,4")).toBe(10);
 });
 
+test('returns sum of 10 comma-separated numbers', () => {
+    expect(add("1,2,3,4,5,6,7,8,9,10")).toBe(55);
+});
+test('returns sum of 100 comma-separated numbers', () => {
+    const input = Array.from({ length: 100 }, (_, i) => i + 1).join(',');
+    const expected = (100 * (100 + 1)) / 2; // 5050
+    expect(add(input)).toBe(expected);
+});
+test('returns sum of 1000 comma-separated numbers', () => {
+    const input = Array.from({ length: 1000 }, (_, i) => i + 1).join(',');
+    const expected = (1000 * (1000 + 1)) / 2; // 500500
+    expect(add(input)).toBe(expected);
+});
 
