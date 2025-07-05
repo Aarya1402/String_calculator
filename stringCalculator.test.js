@@ -11,3 +11,8 @@ test('add function returns 0 for empty string', () => {
 test('returns the number if only one number is provided', () => {
   expect(add("4")).toBe(4);
 });
+
+test('returns sum of two comma-separated numbers', () => {
+  expect(add("1,2")).toBe(3);
+});
+
