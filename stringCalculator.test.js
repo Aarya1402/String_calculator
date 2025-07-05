@@ -37,3 +37,8 @@ test('returns sum of 1000 comma-separated numbers', () => {
     expect(add(input)).toBe(expected);
 });
 
+test('handles newline as delimiter', () => {
+    expect(add("1\n2,3")).toBe(6);
+});
+
+
