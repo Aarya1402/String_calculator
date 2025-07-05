@@ -42,3 +42,6 @@ test('handles newline as delimiter', () => {
 });
 
 
+test('support custom single-character delimiter', () => {
+    expect(add("//;\n1;2")).toBe(3);
+});

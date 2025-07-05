@@ -1,12 +1,41 @@
-function add(numbers) {
-    if (numbers === "") return 0; // If the input is an empty string, return 0
-    if (numbers.length === 1) return parseInt(numbers, 10); // If only one number is provided, return it as an integer
-        const sanitized = numbers.replace(/\n/g, ",");
-    if (numbers.includes(",")) {
-        const numArray = sanitized.split(",").map(num => parseInt(num, 10));
-        return numArray.reduce((sum, num) => sum + num, 0); // Sum the array of numbers
-    }
-    if (!numbers.includes(',')) return parseInt(numbers, 10);
-
+function startsWithCustomDelimiters(numbers) {
+  return numbers.startsWith("//");
 }
-module.exports = add;
+
+function add(numbers) {
+  if (numbers === "") return 0;
+
+  let delimiters = [",", "\n"]; // Default delimiters: comma and newline
+
+  if (startsWithCustomDelimiters(numbers)) {
+    const parts = numbers.split("\n", 2);
+    const customDelimiterSection = parts[0].substring(2);
+    const delimiterMatch = customDelimiterSection.match(/\[(.*?)\]/g);
+
+    if (delimiterMatch) {
+      delimiters = delimiterMatch.map((d) => d.slice(1, -1));
+    } else {
+      delimiters = [customDelimiterSection];
+    }
+
+    numbers = parts[1];
+  }
+
+  const delimiterRegex = new RegExp(
+    delimiters.map((d) => escapeRegex(d)).join("|")
+  );
+
+  const numArray = numbers
+    .split(delimiterRegex)
+    .map(Number)
+    .filter((num) => num <= 1000);
+
+
+  return numArray.reduce((sum, num) => sum + num, 0);
+}
+
+function escapeRegex(str) {
+  return str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
+module.exports =  add ;
